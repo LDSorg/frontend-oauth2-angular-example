@@ -1,4 +1,4 @@
-OAuth2 jQuery
+OAuth2 AngularJS (seed-style)
 =============
 
 An example for using OAuth2 (Facebook Connect)
@@ -31,6 +31,12 @@ Setup
 2. Follow the API outlined below
 3. Clone this project as your public folder
 4. Run your server, serving the public folder staticly
+
+And remember:
+
+```bash
+bower install
+```
 
 API
 ===
