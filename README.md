@@ -11,6 +11,13 @@ Although it does rely on a server, you can remove the server redirects so that y
 provide your users with a seamless experience that doesn't disrupt their flow in
 your application.
 
+Angular Service for LDS Connect
+-----------------
+
+There are already some pre-built convenience functions for using LDS Connect with AngularJS.
+
+See <https://github.com/LDSorg/lds-connect-angular>.
+
 Zero-Config Example
 =======
 
