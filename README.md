@@ -11,6 +11,11 @@ Although it does rely on a server, you can remove the server redirects so that y
 provide your users with a seamless experience that doesn't disrupt their flow in
 your application.
 
+Screencast
+=========
+
+See <https://youtu.be/3lnSjV8m1Jg>.
+
 Zero-Config Install and Run
 ================
 
@@ -82,11 +87,6 @@ You **cannot** login as a real lds.org user as a test application.
 If you try, you will get an error.
 
 The login you must use for test applications is `dumbledore` with the passphrase `secret`.
-
-Screencast
-=========
-
-forthcoming...
 
 Create a Backend in your Favorite Language
 =====
