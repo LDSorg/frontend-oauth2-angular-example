@@ -12,13 +12,6 @@ Implicit Grant (`response_type=token`) is the correct solution for
   * Desktop Clients with WebView
   * Non-secure Environments
 
-Angular Service for LDS Connect
------------------
-
-~~There are already some pre-built convenience functions for using LDS Connect with AngularJS.~~
-
-~~See <https://github.com/LDSorg/lds-connect-angular>~~ (**not yet updated for LDS Connect v2**).
-
 Screencast
 =========
 
@@ -42,7 +35,7 @@ pushd passport-lds-connect-example
 npm install
 ```
 
-2.5 Clone Certificates
+1.5 Clone Certificates
 ----------------------
 
 ```bash
@@ -106,6 +99,14 @@ NOTE: the lds.io beta (lds connect v2) requires the use of an actual user accoun
 If you try, you will get an error.~~
 
 ~~The login you must use for test applications is `dumbledore` with the passphrase `secret`.~~
+
+6. Angular Service for LDS Connect
+-----------------
+
+~~There are already some pre-built convenience functions for using LDS Connect with AngularJS.~~
+
+~~See <https://github.com/LDSorg/lds-connect-angular>~~ (**not yet updated for LDS Connect v2**).
+
 
 API
 ===
