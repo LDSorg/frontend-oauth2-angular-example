@@ -1,0 +1,7 @@
+<div>
+  <p ng-if="!MP.session.user">Nothing to see here. Try logging in.</p>
+</div>
+<div ng-if="MP.session.user">
+  <img ng-src="{{ MP.session.headshot }}">
+  <pre><code>{{ MP.session.user | json }}</code></pre>
+</div>

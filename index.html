@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>OAuth2 AngularJS Facebook Connect / LDS Connect Example</title>
+  <meta name="description" content="An example for using OAuth2 (Facebook Connect) with LDS Connect and Angular Seed">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
+  <!-- link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.1/spacelab/bootstrap.min.css" -->
+  <link rel="stylesheet" href="bootstrap.css">
+  <link rel="stylesheet" href="app.css">
+  <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+</head>
+<body>
+  <!-- ul class="menu">
+    <li><a href="#/view1">view1</a></li>
+    <li><a href="#/view2">view2</a></li>
+  </ul -->
+  <div class="container">
+    <nav ng-controller="MyNavCtrl as MNC" class="navbar navbar-default">
+      <div ng-if="MNC.show" class="modal-backdrop fade" style="height: 100%; position: fixed;" ng-class="{ in: MNC.showAnimate }"></div>
+      <div ng-if="MNC.show" role="dialog" class="modal fade" ng-style="{ 'display': MNC.show && 'block' }" ng-class="{ in: MNC.showAnimate }">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Login Options</h4>
+            </div>
+            <div class="modal-body">
+              <button
+                ng-click="MNC.login('ldsconnect')"
+                type="button"
+                class="btn btn-primary"
+                >LDS Connect</button>
+              <button 
+                ng-click="MNC.login('facebook')"
+                type="button"
+                class="btn btn-primary"
+                >Facebook Connect</button>
+            </div>
+            <div class="modal-footer ng-scope">
+                <button class="btn btn-default" ng-click="MNC.openLogin()">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Home</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li ng-if="!MNC.session.user"><a
+              ng-click="MNC.openLogin()"
+              href=""
+              class="btn btn-link"
+              >Login <span class="sr-only"></span></a></li>
+            <li ng-if="MNC.session.user"><a
+              href="#/directory"
+              class="btn btn-link"
+              >Directory <span class="sr-only"></span></a></li>
+            <li ng-if="MNC.session.user"><a
+              href="#/profile"
+              class="btn btn-link"
+              >Profile <span class="sr-only"></span></a></li>
+            <li ng-if="MNC.session.user"><a
+              href="/logout"
+              class="btn btn-link"
+              >Logout <span class="sr-only"></span></a></li>
+          <ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div class="js-login-dialog modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Login Options</h4>
+          </div>
+          <div class="modal-body">
+            <button type="button" class="btn btn-primary">LDS Connect</button>
+            <button type="button" class="btn btn-primary">Facebook Connect</button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <!-- button type="button" class="btn btn-primary">Save changes</button -->
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div ng-view></div>
+
+    <div>Angular seed app: v<span app-version></span></div>
+  </div> <!-- /.container -->
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="app.js"></script>
+  <script src="views/profile/profile.js"></script>
+  <script src="views/directory/directory.js"></script>
+  <script src="components/session/session.js"></script>
+  <script src="components/version/version.js"></script>
+  <script src="components/version/version-directive.js"></script>
+  <script src="components/version/interpolate-filter.js"></script>
+</body>
+</html>
