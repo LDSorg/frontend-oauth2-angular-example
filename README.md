@@ -31,14 +31,14 @@ is used.
 Angular Service for LDS Connect
 -----------------
 
-There are already some pre-built convenience functions for using LDS Connect with AngularJS.
+~~There are already some pre-built convenience functions for using LDS Connect with AngularJS.~~
 
-See <https://github.com/LDSorg/lds-connect-angular> (not yet updated for LDS Connect v2).
+~~See <https://github.com/LDSorg/lds-connect-angular>~~ (**not yet updated for LDS Connect v2**).
 
 Screencast
 =========
 
-See <https://youtu.be/3lnSjV8m1Jg> (not yet updated for LDS Connect v2).
+~~See <https://youtu.be/3lnSjV8m1Jg>~~ (**not yet updated for LDS Connect v2**).
 
 Zero-Config Install and Run
 ================
@@ -104,7 +104,7 @@ because the way that many OAuth2 implementations validate domains requires
 having an actual domain. Also, you will be testing with **SSL on** so that
 your development environment mirrors your production environment.
 
-5. Login as dumbledore
+5. Login ~~as dumbledore~~ with your lds account
 -----------
 
 NOTE: the lds.io beta (lds connect v2) requires the use of an actual user account at this time.
