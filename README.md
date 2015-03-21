@@ -11,22 +11,6 @@ Implicit Grant (`response_type=token`) is the correct solution for
   * Mobile Apps with WebView
   * Desktop Clients with WebView
   * Non-secure Environments
-  
-The key difference with this style of OAuth2 and the better known server-side strategy
-is that it **DOES NOT use the app sercet key**.
-
-It's the perfect match for situations where you can't include your app's private key
-because users have the ability to view the source or bytecode of your app.
-
-It's also great for situations where, as a provider, you're fine with the user's data
-passing to the user's browser through an app, but your privacy policy dictates that the
-user's data should never touch an app's server (and you trust app developers to abide
-by the privacy policy).
-
-This is a template for gracefully handling the browser component of **client-side** OAuth2.
-
-An https secured server is included for convenience, but only the static file-serving feature
-is used.
 
 Angular Service for LDS Connect
 -----------------
@@ -56,6 +40,15 @@ git clone git@github.com:LDSorg/passport-lds-connect-example.git
 pushd passport-lds-connect-example
 
 npm install
+```
+
+2.5 Clone Certificates
+----------------------
+
+```bash
+# Clone the example HTTPS/SSL certificates into ./certs
+git clone https://github.com/LDSorg/local.ldsconnect.org-certificates.git ./certs
+tree -I .git ./certs
 ```
 
 2. Clone Frontend
@@ -214,8 +207,30 @@ It has a teeny bitsy bit of JavaScript to make sure that the login
 will work across browsers, mobile devices, and webviews, in a variety
 of OAuth2 strategies.
 
-FIY: Server-Side vs Client-Only OAuth2
-==============
+FIY
+====
+
+About Client-Side OAuth2
+-----
+
+The key difference with this style of OAuth2 and the better known server-side strategy
+is that it **DOES NOT use the app sercet key**.
+
+It's the perfect match for situations where you can't include your app's private key
+because users have the ability to view the source or bytecode of your app.
+
+It's also great for situations where, as a provider, you're fine with the user's data
+passing to the user's browser through an app, but your privacy policy dictates that the
+user's data should never touch an app's server (and you trust app developers to abide
+by the privacy policy).
+
+This is a template for gracefully handling the browser component of **client-side** OAuth2.
+
+An https secured server is included for convenience, but only the static file-serving feature
+is used.
+
+Server-Side vs Client-Only OAuth2
+-------
 
 Just an FYI for the curious...
 
