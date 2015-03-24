@@ -208,7 +208,7 @@ It has a teeny bitsy bit of JavaScript to make sure that the login
 will work across browsers, mobile devices, and webviews, in a variety
 of OAuth2 strategies.
 
-FIY
+FYI
 ====
 
 About Client-Side OAuth2
