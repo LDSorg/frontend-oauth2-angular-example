@@ -115,11 +115,11 @@ angular.module('myApp').controller('MyNavCtrl', [
     var myAppId = 'TEST_ID_9e78b54c44a8746a5727c972';
     var requestedScope = 'me';
 
-    var url = 'https://lds.io/oauth/dialog/authorize'
+    var url = 'https://lds.io/api/oauth3/authorization_dialog'
       + '?response_type=token'
       // WARNING: never provide a client_secret in a browser, mobile app, or desktop app
       + '&client_id=' + myAppId
-      + '&redirect_uri=' + myAppDomain + '/oauth-close.html?type=/auth/ldsconnect/callback/'
+      + '&redirect_uri=' + myAppDomain + '/oauth-close.html?type=/callbacks/ldsconnect.org'
       + '&scope=' + encodeURIComponent(requestedScope)
       + '&state=' + Math.random().toString().replace(/^0./, '')
       ;    
