@@ -1,1 +1,8 @@
 <p>This is the Directory View.</p>
+<div class="row">
+  <div ng-repeat="photo in MDC.ward" class="col-xs-6 col-md-3">
+    <div class="thumbnail">
+      <img ng-src="{{ photo.url }}" alt="photo.name">
+    </a>
+  </div>
+</div>

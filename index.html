@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="app.css">
   <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
-<body>
+<body class="fade" ng-class="{ in: R.ready }">
   <!-- ul class="menu">
     <li><a href="#/view1">view1</a></li>
     <li><a href="#/view2">view2</a></li>
@@ -31,19 +31,44 @@
                 <h4 class="modal-title">Login Options</h4>
             </div>
             <div class="modal-body">
-              <button
-                ng-click="MNC.login('ldsconnect')"
-                type="button"
-                class="btn btn-primary"
-                >LDS Connect</button>
-              <button 
-                ng-click="MNC.login('facebook')"
-                type="button"
-                class="btn btn-primary"
-                >Facebook Connect</button>
+              <div class="row">
+                <div class="col-sm-6">
+                  <button
+                    ng-click="MNC.ldsLogin({ authorizationRedirect: false })"
+                    type="button"
+                    class="btn btn-warning"
+                    >LDS Connect (Browser)</button>
+                </div>
+                <div class="col-sm-6">
+                  <button
+                    ng-click="MNC.ldsLogin({ authorizationRedirect: true })"
+                    type="button"
+                    class="btn btn-warning"
+                    >LDS Connect (Browser/Server)</button>
+                </div>
+              </div>
+
+              <br>
+
+              <div class="row">
+                <div class="col-sm-6">
+                  <button
+                    ng-click="MNC.oauth3Login('https://facebook.com', { authorizationRedirect: false })"
+                    type="button"
+                    class="btn btn-primary"
+                    >Facebook Connect (Browser)</button>
+                </div>
+                <div class="col-sm-6">
+                  <button
+                    ng-click="MNC.oauth3Login('https://facebook.com', { authorizationRedirect: true })"
+                    type="button"
+                    class="btn btn-primary"
+                    >Facebook Connect (Browser/Server)</button>
+                </div>
+              </div>
             </div>
             <div class="modal-footer ng-scope">
-                <button class="btn btn-default" ng-click="MNC.openLogin()">Cancel</button>
+                <button class="btn btn-default" ng-click="MNC.closeLogin()">Cancel</button>
             </div>
           </div>
         </div>
@@ -65,20 +90,20 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
-            <li ng-if="!MNC.session.user"><a
+            <li ng-if="!MNC.session"><a
               ng-click="MNC.openLogin()"
               href=""
               class="btn btn-link"
               >Login <span class="sr-only"></span></a></li>
-            <li ng-if="MNC.session.user"><a
+            <li ng-if="MNC.session"><a
               href="#/directory"
               class="btn btn-link"
               >Directory <span class="sr-only"></span></a></li>
-            <li ng-if="MNC.session.user"><a
+            <li ng-if="MNC.session"><a
               href="#/profile"
               class="btn btn-link"
               >Profile <span class="sr-only"></span></a></li>
-            <li ng-if="MNC.session.user"><a
+            <li ng-if="MNC.session"><a
               href="/logout"
               class="btn btn-link"
               >Logout <span class="sr-only"></span></a></li>
@@ -123,14 +148,13 @@
   <script src="app.js"></script>
   <script src="views/profile/profile.js"></script>
   <script src="views/directory/directory.js"></script>
-  <script src="components/session/session.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
 
   <script src="bower_components/recase/recase.js"></script>
   <script src="bower_components/oauth3/oauth3.js"></script>
-  <script src="bower_components/oauth3/oauth3.jquery.js"></script>
+  <script src="bower_components/oauth3/angular-oauth3.js"></script>
 
   <script src="bower_components/lds-api/src/lds-io-storage.js"></script>
   <script src="bower_components/lds-api/src/lds-io-config.js"></script>

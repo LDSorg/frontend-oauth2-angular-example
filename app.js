@@ -3,31 +3,47 @@
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
   'ngRoute',
+  'oauth3',
+  'lds.io',
   'myApp.version',
   'myApp.profile',
   'myApp.directory',
-  'myApp.session'
 ]).
 config(['$routeProvider', function($routeProvider) {
+
   $routeProvider.otherwise({ redirectTo: '/profile' });
+
+}]).run(['$rootScope', 'LdsApi', 'LdsApi', function($rootScope, LdsApi) {
+
+  // This should happen in the config step, before other modules are run
+  return LdsApi.init({
+    appId: 'TEST_ID_9e78b54c44a8746a5727c972'
+  }).then(function () {
+    console.log("Now ready to accept login click events");
+    $rootScope.R = { ready: true };
+  }, function (err) {
+    console.error('Error initializing LdsApi');
+    console.error(err);
+  });
+
 }]);
 
 angular.module('myApp').controller('MyNavCtrl', [
-    '$scope'
+    '$rootScope'
+  , '$scope'
   , '$timeout'
   , '$window'
-  , '$http'
-  , 'MyAppSession'
-  , function ($scope, $timeout, $window, $http, MyAppSession) {
-  var MNC = this
-    ;
-
-  MNC.session = MyAppSession.session;
+  , 'Oauth3'
+  , 'LdsApiSession'
+  , 'LdsApiRequest'
+  , 'LdsApi'
+  , function ($rootScope, $scope, $timeout, $window, Oauth3, LdsApiSession, LdsApiRequest, LdsApi) {
+  var MNC = this;
 
   // I wrote my own modal code instead of including angular-ui-bootstrap
   // If I were to do this all proper-like, it would go in a directive
   // (or I'd just use angular-bootstrap)
-  MNC.openLogin = function () {
+  MNC.toggleLogin = function () {
     if (!MNC.show) {
       MNC.show = true; //!MNC.show;
       $timeout(function () {
@@ -42,89 +58,66 @@ angular.module('myApp').controller('MyNavCtrl', [
       }, 150);
     }
   };
-  MNC.closeLogin = MNC.openLogin;
+  MNC.closeLogin = MNC.openLogin = MNC.toggleLogin;
 
-  function testLogin() {
-    $http.get('/account.json').then(function (resp) {
-      var data = resp.data;
-
-      if (!data || !data.user) {
-        return;
+  MNC.oauth3Login = function (providerUri, opts) {
+    opts = opts || {};
+    // TODO in the future the discovery process will happen in oauth3.html
+    // so that we can discover a provider without losing the click event
+    // (which would thus prevent a popup). Also, we'll allow (click-jack proof) iframe access
+    // Oauth3.discover("https://facebook.com");
+    var fbDirectives = {
+      "authorization_dialog": {
+        "method": "GET"
+      , "url": "https://www.facebook.com/dialog/oauth"
       }
-
-      MNC.closeLogin();
-      MNC.session.user = resp.data.user;
-      if (MNC.session.user.photos && MNC.session.user.photos.length) {
-        MNC.session.headshot = MNC.session.user.photos[0].value;
+    , "access_token": {
+        "method": "POST"
+      , "url": "https://graph.facebook.com/oauth/access_token"
       }
-    });
-  }
-
-  function testAccess(token) {
-    // TODO get account list
-    $http.get("https://lds.io/api/ldsconnect/"
-      + 'undefined'
-      + "/me", {
-        headers: {
-          Authorization: 'Bearer ' + token
-        }
-      }).then(function (resp) {
-      console.info('testAccess response');
-      console.log(resp);
-
-      if (!resp.data) {
-        return;
+    , "profile": {
+        "method": "GET"
+      , "url": "https://graph.facebook.com/me"
       }
-
-      MNC.closeLogin();
-      MNC.session.user = resp.data;
-      if (MNC.session.user.photos && MNC.session.user.photos.length) {
-        MNC.session.headshot = MNC.session.user.photos[0].value;
-      }
-    });
-  }
-
-  MNC.login = function (/*name*/) {
-    $window.completeLogin = function (name, url) {
-      $window.completeLogin = null;
-      var match;
-      var token;
-
-      // login was probably successful if it had a code
-      if (/code=/.test(url)) {
-        testLogin();
-      }
-      else if (/access_token=/.test(url)) {
-        match = url.match(/(^|\#|\?|\&)access_token=([^\&]+)(\&|$)/);
-        if (!match || !match[2]) {
-          throw new Error("couldn't find token!");
-        }
-
-        token = match[2];
-        testAccess(token);
-      }
-      else {
-        $window.alert("looks like the login failed");
-      }
+    , "authn_scope": ""
     };
 
-    // This would be for server-side oauth2
-    //$window.open('/auth/' + name);
-
-    var myAppDomain = 'https://local.ldsconnect.org:8043';
-    var myAppId = 'TEST_ID_9e78b54c44a8746a5727c972';
-    var requestedScope = 'me';
-
-    var url = 'https://lds.io/api/oauth3/authorization_dialog'
-      + '?response_type=token'
-      // WARNING: never provide a client_secret in a browser, mobile app, or desktop app
-      + '&client_id=' + myAppId
-      + '&redirect_uri=' + myAppDomain + '/oauth-close.html?type=/callbacks/ldsconnect.org'
-      + '&scope=' + encodeURIComponent(requestedScope)
-      + '&state=' + Math.random().toString().replace(/^0./, '')
-      ;    
-
-    // This is for client-side oauth2
-    $window.open(url, 'ldsconnect.orgLogin', 'height=720,width=620');
+    Oauth3.login(
+      'https://facebook.com'
+    , { appId: '1592518370979179', directives: fbDirectives, authorizationRedirect: opts.authorizationRedirect }
+    ).then(function () {
+      MNC.closeLogin();
+      window.alert("facebook login succeeded");
+    }, function () {
+      window.alert("facebook login failed");
+    });
   };
+
+  // This must be called from a click
+  MNC.ldsLogin = function (opts) {
+    opts = opts || {};
+    LdsApiSession.login({
+      popup: true
+    , authorizationRedirect: opts.authorizationRedirect
+    , scope: 'directories'
+    }).then(function () {
+      MNC.closeLogin();
+      console.log('should be handled by onLogin handler');
+      // LdsApiSession.onLogin will fire
+    }, function (err) {
+      console.error(err);
+      $window.alert('Implicit Grant Login Failed');
+    });
+  };
+
+  function displayLogin(session) {
+    console.log('session exists');
+    // the session contains logins (tokens) and accounts (access)
+
+    // Note: the session module can handle multiple accounts
+    // but most 3rd party apps will only use the default
+    MNC.session = session;
+  }
+
+  LdsApiSession.onLogin($scope, displayLogin);
 }]);
