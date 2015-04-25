@@ -12,6 +12,7 @@
     "angular-mocks": "~1.2.x",
     "html5-boilerplate": "~4.3.0",
     "oauth3": "~1.0.1",
-    "lds-api": "~1.0.3"
+    "lds-api": "~1.0.3",
+    "jquery": "~2.1.3"
   }
 }
